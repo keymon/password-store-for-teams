@@ -25,7 +25,8 @@ can be used.
     * `team-pass`
  3. Install pass as described in the instructions below
  4. Init your pass repo:
-    ```
+
+```
     cd ~/.team-pass
     pass init GPGID GPGID GPGID GPGID ... # All your teams ids
 ```
