@@ -12,10 +12,10 @@ help:
 
 .PHONY: import-and-sign
 import-and-sign: ## Import in GPG all keys from the list of allowed keys
-	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq), \
+	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq | cut -c 33-40), \
 		( \
 			$(GPG) --list-public-key $(var) || \
-			$(GPG) --keyserver hkp://keyserver.ubuntu.com --search-keys 0x$(var); \
+			$(GPG) --keyserver hkp://keyserver.ubuntu.com:80 --search-keys $(var); \
 		) && \
 		$(GPG) --sign-key $(var); \
 	)
@@ -38,3 +38,11 @@ check-pass-store: ## Check if you can read all the keys
 		PASSWORD_STORE_DIR=$$(pwd) pass $$i > /dev/null || exit 1; \
 	done
 	@echo "OK: All password entries are readable"
+
+.PHONY: reencrypt
+reencrypt:
+	pass init --path=. $(shell cat .gpg-id)
+
+.PHONY: publish-public-keys
+publish-public-keys:
+	$(GPG) --keyserver hkp://keyserver.ubuntu.com:80 --send-keys $(shell cat .gpg-id)
