@@ -12,10 +12,10 @@ help:
 
 .PHONY: import-and-sign
 import-and-sign: ## Import in GPG all keys from the list of allowed keys
-	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq | cut -c 33-40), \
+	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq ), \
 		( \
 			$(GPG) --list-public-key $(var) || \
-			$(GPG) --keyserver hkp://keyserver.ubuntu.com:80 --search-keys $(var); \
+			$(GPG) --keyserver hkp://keyserver.ubuntu.com --search-keys 0x$(var); \
 		) && \
 		$(GPG) --sign-key $(var); \
 	)
@@ -45,4 +45,4 @@ reencrypt:
 
 .PHONY: publish-public-keys
 publish-public-keys:
-	$(GPG) --keyserver hkp://keyserver.ubuntu.com:80 --send-keys $(shell cat .gpg-id)
+	$(GPG) --keyserver hkp://keyserver.ubuntu.com --send-keys $(shell cat .gpg-id)
