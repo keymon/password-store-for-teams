@@ -12,7 +12,7 @@ help:
 
 .PHONY: import-and-sign
 import-and-sign: ## Import in GPG all keys from the list of allowed keys
-	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq), \
+	$(foreach var,$(shell find . -name .gpg-id | xargs cat | sort | uniq | cut -c 33-40), \
 		( \
 			$(GPG) --list-public-key $(var) || \
 			$(GPG) --keyserver hkp://keyserver.ubuntu.com --search-keys 0x$(var); \
