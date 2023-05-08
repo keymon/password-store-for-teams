@@ -6,7 +6,7 @@ This repository contains a base template for a
 
 It contains:
  * A README.md to adapt to your team
- * A script to setup a unique alias based on the directory name.
+ * A script to set up a unique alias based on the directory name.
  * A Makefile with some common tools
 
 This is based on some original work from me and some contributions from
@@ -38,7 +38,7 @@ Team shared credential store
 
 This is a Git repository that contains a Database of passwords shared in the team.
 
-**IMPORTANT**: This repository **is a database** managed by a external
+**IMPORTANT**: This repository **is a database** managed by external
 opensource software called *pass* (http://passwordstore.org/),
 that you must install in your computer (instructions below).
 
